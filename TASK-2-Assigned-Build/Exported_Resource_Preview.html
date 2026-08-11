@@ -204,10 +204,14 @@
       <div class="hero-tag">Free Research Resource</div>
       <h1>The Pre-Submission Paper Checklist</h1>
       <p class="subtitle">A simple, pre-flight checklist designed to catch mismatched numbers and missing data before you submit your paper to Nature, IEEE, or a grant committee.</p>
+      <div style="margin-top: 32px;">
+        <button id="heroCopyBtn" class="copy-btn" onclick="copyTemplate()" style="margin-right: 12px; padding: 14px 28px; font-size: 1.05rem;">📋 Copy Markdown</button>
+        <button class="copy-btn" onclick="downloadMarkdown()" style="padding: 14px 28px; font-size: 1.05rem;">⬇️ Download .md</button>
+      </div>
     </div>
 
     <div class="narrative-box">
-      <h3>Why we built this</h3>
+      <h3>What it does & how it helps</h3>
       <p style="margin-bottom: 0;">When multiple co-authors work on a 40-page draft, mistakes happen. You might update a learning rate in Section 3, but forget to update it in Section 6. Missing a simple Data Availability Statement can delay your paper for weeks. We built this checklist to stress-test your manuscript and catch these errors before the reviewers do.</p>
     </div>
 
@@ -230,8 +234,16 @@
       </div>
     </div>
 
+    <h2>The Automated Audit Prompt</h2>
+    <p>If you are using an AI document editor like <a href="https://superdocs.app" target="_blank" style="color: var(--accent-blue); font-weight: 500;">SuperDocs</a>, paste this prompt alongside your paper to automatically run the Number Tracker audit without doing it manually:</p>
+    <div style="background: var(--code-bg); padding: 20px; border-radius: 6px; border: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; color: var(--muted); margin-bottom: 48px; line-height: 1.5;">
+      <strong>@document-target:</strong> [Section 3.1 Experimental Setup, Section 4 Results, Section 6 Compute Budget]<br><br>
+      <strong>Instruction:</strong><br>
+      Verify that all batch sizes, learning rates, dataset sample counts (N), and compute cluster specifications match across all three sections. Flag any discrepancy with inline review comments.
+    </div>
+
     <h2>The Master Template</h2>
-    <p>Copy the raw markdown template below and paste it directly into your workspace (Notion, Obsidian, Overleaf, or <a href="https://superdocs.app" target="_blank" style="color: var(--accent-blue); font-weight: 500;">SuperDocs</a>). Fill it out systematically before your final PDF compile.</p>
+    <p>Copy the raw markdown template below and paste it directly into your workspace (Notion, Obsidian, Overleaf, etc.). Fill it out systematically before your final PDF compile.</p>
 
     <div class="template-preview">
       <div class="template-header">
@@ -282,6 +294,12 @@
 - [ ] Statistical Rigor (error bars defined, multiple testing corrections applied).
 - [ ] Clarity & Flow (abbreviations defined, consistent mathematical notation).
 </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 48px;">
+        <h3 style="font-family: 'Georgia', serif; font-size: 1.5rem; margin-bottom: 24px;">Ready to pre-flight your paper?</h3>
+        <button id="footerCopyBtn" class="copy-btn" onclick="copyTemplate()" style="margin-right: 12px; padding: 14px 28px; font-size: 1.05rem;">📋 Copy Markdown Template</button>
+        <button class="copy-btn" onclick="downloadMarkdown()" style="padding: 14px 28px; font-size: 1.05rem;">⬇️ Download .md</button>
     </div>
 
     <div class="footer-disclosure">
@@ -379,14 +397,18 @@ Flag any discrepancy with inline review comments.
     function copyTemplate() {
       const templateMarkdown = document.getElementById('raw-markdown').textContent.trim();
       navigator.clipboard.writeText(templateMarkdown).then(() => {
-        const btn = document.getElementById('copyBtn');
-        const originalText = btn.innerText;
-        btn.innerText = '✓ Copied!';
-        btn.classList.add('success');
-        setTimeout(() => {
-          btn.innerText = originalText;
-          btn.classList.remove('success');
-        }, 3000);
+        const btns = [document.getElementById('copyBtn'), document.getElementById('heroCopyBtn'), document.getElementById('footerCopyBtn')];
+        btns.forEach(btn => {
+          if(btn) {
+            const originalText = btn.innerText;
+            btn.innerText = '✓ Copied!';
+            btn.classList.add('success');
+            setTimeout(() => {
+              btn.innerText = originalText;
+              btn.classList.remove('success');
+            }, 3000);
+          }
+        });
       });
     }
 
