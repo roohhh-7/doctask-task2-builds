@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEC Handover & Material Sync Pack | SuperDocs</title>
+    <!-- Modern Geometric Fonts for Bauhaus Aesthetic -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #f5f5f0; /* Architectural off-white paper */
+            --text-primary: #111111; /* Deep structural black */
+            --text-secondary: #555555; /* Concrete grey */
+            --accent-color: #d9381e; /* Safety orange/red accent */
+            --border-color: #222222;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Bauhaus-inspired Header */
+        header {
+            width: 100%;
+            background-color: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 8px solid var(--accent-color);
+        }
+
+        header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            margin: 0 0 1rem 0;
+            text-transform: uppercase;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #aaaaaa;
+        }
+
+        /* Main Container Layout */
+        main {
+            width: 100%;
+            max-width: 1000px;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Narrative Section */
+        .narrative {
+            padding-right: 2rem;
+            border-right: 2px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .narrative {
+                border-right: none;
+                border-bottom: 2px solid var(--border-color);
+                padding-right: 0;
+                padding-bottom: 2rem;
+            }
+        }
+
+        .narrative h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            margin-top: 0;
+            border-bottom: 3px solid var(--text-primary);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .narrative p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-block {
+            background-color: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-left: 6px solid var(--accent-color);
+        }
+        
+        .stat-block h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Action Section */
+        .action-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .action-card {
+            background: white;
+            border: 2px solid var(--border-color);
+            padding: 2.5rem;
+            box-shadow: 8px 8px 0px var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .action-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0px var(--accent-color);
+        }
+
+        .action-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        /* Strict Geometric Buttons */
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            border: 2px solid var(--text-primary);
+            background-color: transparent;
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border-top: 1px solid #ddd;
+            width: 100%;
+        }
+
+        /* Notification Toast */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: var(--accent-color);
+            color: white;
+            text-align: center;
+            border-radius: 0; /* Bauhaus strict edges */
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-weight: 600;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Material Sync Pack</h1>
+        <p>A zero-liability handover template for Principal Architects & Technical PMs.</p>
+    </header>
+
+    <main>
+        <!-- Left: The Narrative & Pain Point -->
+        <section class="narrative">
+            <h2>The Liability Gap</h2>
+            <p>
+                In high-stakes architecture, <strong>document drift</strong> is the leading cause of contractor disputes. 
+            </p>
+            <p>
+                If a client changes a material spec from <em>Brick</em> to <em>Pre-cast Concrete</em> in the Design Narrative, but that change is not manually synced to the Structural Load calculations or the Final Budget Sheet, the General Contractor will build the wrong spec—and your firm assumes the liability.
+            </p>
+            
+            <div class="stat-block">
+                <h3>Pre-Flight Your Handover</h3>
+                <p>This blank Markdown template provides a strict Material Consistency Matrix and Safety Code compliance checklist to audit your final PDFs before ground-break.</p>
+            </div>
+        </section>
+
+        <!-- Right: Action Panel (Copy / Download) -->
+        <section class="action-panel">
+            <div class="action-card">
+                <h3>Get The Blank Template</h3>
+                <p style="margin-bottom: 2rem; color: var(--text-secondary);">
+                    Exported as raw Markdown. You can fill it out manually, or paste it into an AI document engine to automate the structural cross-check.
+                </p>
+
+                <button class="btn btn-primary" onclick="copyTemplate()">
+                    <svg style="width:20px;height:20px;margin-right:10px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    Copy Markdown
+                </button>
+                
+                <button class="btn btn-secondary" onclick="downloadTemplate()">
+                    <svg style="width:20px;height:20px;margin-right:10px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    Download .md File
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Created by Rohit. Built for the AEC community using SuperDocs.</p>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast">Markdown copied to clipboard!</div>
+
+    <!-- The Raw Blank Template Data (No Fake Data) -->
+    <script type="text/markdown" id="raw-markdown">
+# The AEC Construction Handover & Material Sync Pack
+*A Pre-Flight Audit Framework for Principal Architects & Technical PMs*
+
+> **Author / Affiliation Disclosure**: *Created by Rohit as a free open resource for the architecture community. Built using SuperDocs (a document-native AI editing environment). You are free to copy, modify, and distribute this checklist without attribution.*
+
+---
+
+## Document Overview & Pre-Flight Metadata
+
+| Metadata Field | Specification / Value |
+|---|---|
+| **Project Name / ID** | `[Insert Project Name]` |
+| **Principal Architect** | `[Lead Architect Name]` |
+| **Target General Contractor** | `[GC Firm Name]` |
+| **Submission Deadline** | `[Date & Timezone]` |
+| **Primary CAD / BIM Repository** | `[Procore / Autodesk Link]` |
+
+---
+
+## 1. Material Consistency & Budget Matrix
+
+*Goal: Ensure that every core material specified in the Design Narrative matches the Structural Calculations and the Final Budget Sheet. "Document drift" in materials is the #1 cause of contractor disputes.*
+
+| Material Component | Design Narrative (Sec 2) | Structural Specs (Sec 5) | Budget Sheet (Sec 8) | Status |
+|---|---|---|---|---|
+| **Exterior Cladding** |  |  |  | `[ ]` |
+| **Load-Bearing Columns** |  |  |  | `[ ]` |
+| **HVAC Routing** |  |  |  | `[ ]` |
+| **Flooring System** |  |  |  | `[ ]` |
+
+---
+
+## 2. Safety & Liability Compliance Checklist
+
+*Goal: Ensure all local building codes and safety regulations are explicitly cited alongside structural dimensions.*
+
+- [ ] **Fire Safety (IBC 2024)**: Exit corridor widths verified and cited in Section 4.
+- [ ] **ADA Compliance**: Ramp gradients and restroom clearances explicitly noted.
+- [ ] **Environmental (LEED)**: Material sourcing certifications attached in Appendix B.
+- [ ] **Wind/Seismic Load**: Load tolerances cross-referenced with local municipal codes.
+
+---
+
+## 3. SuperDocs Automated Sync Prompt
+
+*To instantly audit your handover pack, copy and paste this command into SuperDocs:*
+
+<!-- SUPERDOCS MULTI-SECTION RECONCILIATION PROMPT -->
+@document-target: [Section 2 Design, Section 5 Structural, Section 8 Budget]
+Instruction:
+Act as a strict compliance officer. Trace the four core materials (Cladding, Columns, HVAC, Flooring) across the Design, Structural, and Budget sections. 
+If a material was changed in the Design section (e.g. Brick to Concrete) but not updated in the Budget section, flag the discrepancy with an urgent inline comment. 
+Verify that all structural load claims cite the correct IBC 2024 safety code.
+    </script>
+
+    <script>
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.textContent = message;
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        function copyTemplate() {
+            const mdContent = document.getElementById('raw-markdown').textContent.trim();
+            navigator.clipboard.writeText(mdContent).then(() => {
+                showToast("Template copied to clipboard!");
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                showToast("Failed to copy template.");
+            });
+        }
+
+        function downloadTemplate() {
+            const mdContent = document.getElementById('raw-markdown').textContent.trim();
+            const blob = new Blob([mdContent], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Architecture_Handover_Template.md';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("Download started!");
+        }
+    </script>
+</body>
+</html>
